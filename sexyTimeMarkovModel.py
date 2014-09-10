@@ -110,10 +110,12 @@ while True:
             totalTime += time
             partnerOneOrgasms += time * orgasmsPerSecond["PartnerOne"][pos]
             partnerTwoOrgasms += time * orgasmsPerSecond["PartnerTwo"][pos]
-            print("Position: " + pos + "\tTime: " + str(time) + "\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+            # print("Position: " + pos + "\tTime: " + str(time) + " (s)/" + str(time / 60.0) + " (min)\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+            print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tPartnerOne Orgasms: {3:.2f}\tPartnerTwo Orgasms: {4:.2f}".format(pos, time, time / 60.0, partnerOneOrgasms, partnerTwoOrgasms))
             pos = positions[transitionProbs[pos].rvs()]
             positionCount += 1
         
-        print("Total Time: " + str(totalTime) + "\tPosition Count: " + str(positionCount) + "\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+        # print("Total Time: " + str(totalTime) + "\tPosition Count: " + str(positionCount) + "\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+        print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tPartnerOne Orgasms: {3}\tPartnerTwo Orgasms: {4}".format(totalTime, totalTime / 60.0, positionCount, int(partnerOneOrgasms), int(partnerTwoOrgasms)))
     else:
         break
