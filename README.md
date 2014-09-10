@@ -10,4 +10,4 @@ A Markov model for sex!
 <p>4. run:</p>
 <p>python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "arousalRates.csv" "timeParameters.csv"</p>
 
-<p> All of the parameters contained in the .csv files can be tuned by the user, including adding and removing positions. </p>
+<p> All of the parameters contained in the .csv files can be tuned by the user, including the addition and removal of positions. "initialProbs.csv" gives the probabilities of sex starting in different positions. "transitionProbs.csv" provides the probabilities of changing from one position to another. "arousalRates.csv" is used to indicate how stimulating a given position is for each partner. Finally, "timeParameters.csv" provides the parameters that are used to determine the amount of time spent in each position during sex (as drawn from a normal distribution).</p>
