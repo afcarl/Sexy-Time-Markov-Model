@@ -32,7 +32,7 @@ import numpy
 import sys
 
 # Import the probabilities for starting in different sexual positions.
-def getInitialDistribution(filename):
+def getInitialProbs(filename):
     positions = []
     initialProbs = []
     
@@ -88,7 +88,7 @@ def getTimeParameters(filename):
     
     return timeParameters
 
-positions, initialDistribution = getInitialDistribution(sys.argv[1])
+positions, initialProbs = getInitialProbs(sys.argv[1])
 transitionProbs = getTransitionProbs(sys.argv[2])
 arousalRates = getArousalRates(sys.argv[3])
 timeParameters = getTimeParameters(sys.argv[4])
@@ -101,7 +101,7 @@ while True:
         positionCount = 0
         partnerOneOrgasms = 0.0
         partnerTwoOrgasms = 0.0
-        pos = positions[initialDistribution.rvs()]
+        pos = positions[initialProbs.rvs()]
         # while partnerOneOrgasms < 1.0 and partnerTwoOrgasms < 1.0: # You know... if you're into being fair.
         while partnerTwoOrgasms < 1.0:
             mu = timeParameters[pos]["mean"]
