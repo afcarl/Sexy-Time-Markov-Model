@@ -61,7 +61,7 @@ def getTransitionProbs(filename):
     return transitionProbs
 
 # Import the orgasm rate for each partner and sexual position.
-def getOrgasmsPerSecond(filename):
+def getArousalRates(filename):
     reader = csv.DictReader(open(filename))
     [position, partnerOne, partnerTwo] = reader.fieldnames
       
@@ -90,7 +90,7 @@ def getTimeParameters(filename):
 
 positions, initialDistribution = getInitialDistribution(sys.argv[1])
 transitionProbs = getTransitionProbs(sys.argv[2])
-arousalRates = getOrgasmsPerSecond(sys.argv[3])
+arousalRates = getArousalRates(sys.argv[3])
 timeParameters = getTimeParameters(sys.argv[4])
 
 while True:
