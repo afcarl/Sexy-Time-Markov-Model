@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #!/bin/python
 
-# python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "orgasmsPerSecond.csv" "timeParameters.csv"
+# python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "arousalRates.csv" "timeParameters.csv"
 
 from scipy import stats
 import csv
@@ -65,14 +65,14 @@ def getOrgasmsPerSecond(filename):
     reader = csv.DictReader(open(filename))
     [position, partnerOne, partnerTwo] = reader.fieldnames
       
-    orgasmsPerSecond = {partnerOne: {}, partnerTwo: {}}
+    arousalRates = {partnerOne: {}, partnerTwo: {}}
     
     for row in reader:
         position = row["Position"]
-        orgasmsPerSecond[partnerOne][position] = float(row[partnerOne])
-        orgasmsPerSecond[partnerTwo][position] = float(row[partnerTwo])
+        arousalRates[partnerOne][position] = float(row[partnerOne])
+        arousalRates[partnerTwo][position] = float(row[partnerTwo])
     
-    return orgasmsPerSecond
+    return arousalRates
 
 # Import the parameters used to determine the amount of time spent in each sexual position.
 def getTimeParameters(filename):
@@ -90,7 +90,7 @@ def getTimeParameters(filename):
 
 positions, initialDistribution = getInitialDistribution(sys.argv[1])
 transitionProbs = getTransitionProbs(sys.argv[2])
-orgasmsPerSecond = getOrgasmsPerSecond(sys.argv[3])
+arousalRates = getOrgasmsPerSecond(sys.argv[3])
 timeParameters = getTimeParameters(sys.argv[4])
 
 while True:
@@ -108,8 +108,8 @@ while True:
             sigma = timeParameters[pos]["std"]
             time = numpy.random.normal(mu, sigma)
             totalTime += time
-            partnerOneOrgasms += time * orgasmsPerSecond["PartnerOne"][pos]
-            partnerTwoOrgasms += time * orgasmsPerSecond["PartnerTwo"][pos]
+            partnerOneOrgasms += time * arousalRates["PartnerOne"][pos]
+            partnerTwoOrgasms += time * arousalRates["PartnerTwo"][pos]
             # print("Position: " + pos + "\tTime: " + str(time) + " (s)/" + str(time / 60.0) + " (min)\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
             print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tPartnerOne Orgasms: {3:.2f}\tPartnerTwo Orgasms: {4:.2f}".format(pos, time, time / 60.0, partnerOneOrgasms, partnerTwoOrgasms))
             pos = positions[transitionProbs[pos].rvs()]

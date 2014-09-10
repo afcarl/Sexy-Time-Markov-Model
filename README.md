@@ -8,6 +8,6 @@ A Markov model for sex!
 <p>2. Extract the .zip.
 <p>3. Using a terminal, cd to the directory containing the files.</p>
 <p>4. run:</p>
-<p>python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "orgasmsPerSecond.csv" "timeParameters.csv"</p>
+<p>python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "arousalRates.csv" "timeParameters.csv"</p>
 
 <p> All of the parameters contained in the .csv files can be tuned by the user, including adding and removing positions. </p>
