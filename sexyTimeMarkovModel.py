@@ -102,7 +102,7 @@ while True:
         partnerOneOrgasms = 0.0
         partnerTwoOrgasms = 0.0
         pos = positions[initialProbs.rvs()]
-        # while partnerOneOrgasms < 1.0 and partnerTwoOrgasms < 1.0: # You know... if you're into being fair.
+        # while partnerOneOrgasms < 1.0 or partnerTwoOrgasms < 1.0: # You know... if you're into being fair.
         while partnerTwoOrgasms < 1.0:
             mu = timeParameters[pos]["mean"]
             sigma = timeParameters[pos]["std"]
