@@ -4,9 +4,10 @@ Sexy-Time-Markov-Model
 A Markov model for sex!
 
 <p><b>To run:</b><p>
-<p>1. Download all of the files contained in the GitHub repository and place them in the same directory.</p>
-<p>2. cd to the directory containing the files.</p>
-<p>3. run:</p>
+<p>1. Download the .zip (to the right) containing all of the files found in the GitHub repository.</p>
+<p>2. Extract the .zip.
+<p>3. Using a terminal, cd to the directory containing the files.</p>
+<p>4. run:</p>
 <p>python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "orgasmsPerSecond.csv" "timeParameters.csv"</p>
 
 <p> All of the parameters contained in the .csv files can be tuned by the user, including adding and removing positions. </p>
