@@ -1,7 +1,7 @@
 Sexy-Time-Markov-Model
 ======================
 
-A Markov model for sex!
+A Markov model for simulating sex!
 
 <p><b>To run:</b><p>
 <p>1. Download the .zip (to the right) containing all of the files found in the GitHub repository.</p>
