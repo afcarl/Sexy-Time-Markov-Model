@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 # python sexyTimeMarkovModel.py "initialProbs.csv" "transitionProbs.csv" "arousalRates.csv" "timeParameters.csv"
 
+from __future__ import print_function
 from scipy import stats
 import csv
 import numpy
@@ -93,27 +94,30 @@ transitionProbs = getTransitionProbs(sys.argv[2])
 arousalRates = getArousalRates(sys.argv[3])
 timeParameters = getTimeParameters(sys.argv[4])
 
-while True:
-    simulate = raw_input("Simulate sex (y/n)? ")
-    # Simulate sex.
-    if "y" in simulate.lower():
-        totalTime = 0.0
-        positionCount = 0
-        partnerOneOrgasms = 0.0
-        partnerTwoOrgasms = 0.0
-        pos = positions[initialProbs.rvs()]
-        # while partnerOneOrgasms < 1.0 or partnerTwoOrgasms < 1.0: # You know... if you're into being fair.
-        while partnerTwoOrgasms < 1.0:
-            mu = timeParameters[pos]["mean"]
-            sigma = timeParameters[pos]["std"]
-            time = numpy.random.normal(mu, sigma)
-            totalTime += time
-            partnerOneOrgasms += time * arousalRates["PartnerOne"][pos]
-            partnerTwoOrgasms += time * arousalRates["PartnerTwo"][pos]
-            print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tPartnerOne Orgasms: {3:.2f}\tPartnerTwo Orgasms: {4:.2f}".format(pos, time, time / 60.0, partnerOneOrgasms, partnerTwoOrgasms))
-            pos = positions[transitionProbs[pos].rvs()]
-            positionCount += 1
-        
-        print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tPartnerOne Orgasms: {3}\tPartnerTwo Orgasms: {4}".format(totalTime, totalTime / 60.0, positionCount, int(partnerOneOrgasms), int(partnerTwoOrgasms)))
-    else:
-        break
+output = open("heresYourEffingData.csv", "w")
+print("Total Time,Position Count,PartnerOne Orgasms,PartnerTwo Orgasms", file = output)
+
+for i in range(0, 100):
+    totalTime = 0.0
+    positionCount = 0
+    partnerOneOrgasms = 0.0
+    partnerTwoOrgasms = 0.0
+    pos = positions[initialProbs.rvs()]
+    # while partnerOneOrgasms < 1.0 or partnerTwoOrgasms < 1.0: # You know... if you're into being fair.
+    while partnerTwoOrgasms < 1.0:
+        mu = timeParameters[pos]["mean"]
+        sigma = timeParameters[pos]["std"]
+        time = numpy.random.normal(mu, sigma)
+        totalTime += time
+        partnerOneOrgasms += time * arousalRates["PartnerOne"][pos]
+        partnerTwoOrgasms += time * arousalRates["PartnerTwo"][pos]
+        # print("Position: " + pos + "\tTime: " + str(time) + " (s)/" + str(time / 60.0) + " (min)\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+        print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tPartnerOne Orgasms: {3:.2f}\tPartnerTwo Orgasms: {4:.2f}".format(pos, time, time / 60.0, partnerOneOrgasms, partnerTwoOrgasms))
+        pos = positions[transitionProbs[pos].rvs()]
+        positionCount += 1
+    
+    # print("Total Time: " + str(totalTime) + "\tPosition Count: " + str(positionCount) + "\tPartnerOne Orgasms: " + str(partnerOneOrgasms) + "\tPartnerTwo Orgasms: " + str(partnerTwoOrgasms))
+    print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tPartnerOne Orgasms: {3}\tPartnerTwo Orgasms: {4}".format(totalTime, totalTime / 60.0, positionCount, int(partnerOneOrgasms), int(partnerTwoOrgasms)))
+    print(str(totalTime / 60.0) + "," + str(positionCount) + "," + str(int(partnerOneOrgasms)) + "," + str(int(partnerTwoOrgasms)), file = output)
+
+output.close()
