@@ -1,6 +1,4 @@
 '''
-The MIT License (MIT)
-
 Copyright (c) 2014 Michael A. Alcorn (https://sites.google.com/site/michaelaalcorn/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
