@@ -63,8 +63,8 @@ def get_time_parameters(filename):
     for row in reader:
         position = row["Position"]
         time_parameters[position] = {}
-        time_parameters[position]["mean"] = float(row["Mean"])
-        time_parameters[position]["std"] = float(row["Standard Deviation"])
+        time_parameters[position]["shape"] = float(row["Shape"])
+        time_parameters[position]["scale"] = float(row["Scale"])
     
     return time_parameters
 
@@ -84,16 +84,16 @@ while True:
         pos = positions[initial_probs.rvs()]
         # while partner_one_orgasms < 1.0 or partner_two_orgasms < 1.0: # You know... if you're into being fair.
         while partner_two_orgasms < 1.0:
-            mu = time_parameters[pos]["mean"]
-            sigma = time_parameters[pos]["std"]
-            time = numpy.random.normal(mu, sigma)
+            shape = time_parameters[pos]["shape"]
+            scale = time_parameters[pos]["scale"]
+            time = numpy.random.poisson(shape, scale)
             total_time += time
-            partner_one_orgasms += time * arousal_rates["PartnerOne"][pos]
-            partner_two_orgasms += time * arousal_rates["PartnerTwo"][pos]
-            print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tPartnerOne Orgasms: {3:.2f}\tPartnerTwo Orgasms: {4:.2f}".format(pos, time, time / 60.0, partner_one_orgasms, partner_two_orgasms))
+            partner_one_orgasms += time * arousal_rates["partner_one"][pos]
+            partner_two_orgasms += time * arousal_rates["partner_two"][pos]
+            print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tpartner_one Orgasms: {3:.2f}\tpartner_two Orgasms: {4:.2f}".format(pos, time, time / 60.0, partner_one_orgasms, partner_two_orgasms))
             pos = positions[transition_probs[pos].rvs()]
             position_count += 1
         
-        print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tPartnerOne Orgasms: {3}\tPartnerTwo Orgasms: {4}".format(total_time, total_time / 60.0, position_count, int(partner_one_orgasms), int(partner_two_orgasms)))
+        print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tpartner_one Orgasms: {3}\tpartner_two Orgasms: {4}".format(total_time, total_time / 60.0, position_count, int(partner_one_orgasms), int(partner_two_orgasms)))
     else:
         break
