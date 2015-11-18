@@ -5,7 +5,7 @@ A Markov model for simulating sex!
 
 <p><b>Step 1.</b></p>
 
-Download the ZIP (to the right) containing all of the files found in the GitHub repository.
+Download the ZIP containing all of the files found in the GitHub repository.
 
 <p><b>Step 2.</b></p>
 
