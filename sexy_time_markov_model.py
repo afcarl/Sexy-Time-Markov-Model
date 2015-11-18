@@ -68,34 +68,39 @@ def get_time_parameters(filename):
     
     return time_parameters
 
-(positions, initial_probs) = get_initial_probs(sys.argv[1])
-transition_probs = get_transition_probs(sys.argv[2])
-arousal_rates = get_arousal_rates(sys.argv[3])
-time_parameters = get_time_parameters(sys.argv[4])
+def main():
+    (positions, initial_probs) = get_initial_probs(sys.argv[1])
+    transition_probs = get_transition_probs(sys.argv[2])
+    arousal_rates = get_arousal_rates(sys.argv[3])
+    time_parameters = get_time_parameters(sys.argv[4])
+    
+    while True:
+        simulate = raw_input("Simulate sex (y/n)? ")
+        # Simulate sex.
+        if "y" in simulate.lower():
+            total_time = 0.0
+            position_count = 0
+            partner_one_orgasms = 0.0
+            partner_two_orgasms = 0.0
+            pos = positions[initial_probs.rvs()]
+            # while partner_one_orgasms < 1.0 or partner_two_orgasms < 1.0: # You know... if you're into being fair.
+            while partner_two_orgasms < 1.0:
+                shape = time_parameters[pos]["shape"]
+                scale = time_parameters[pos]["scale"]
+                time = numpy.random.gamma(shape, scale)
+                total_time += time
+                partner_one_orgasms += time * arousal_rates["partner_one"][pos]
+                partner_two_orgasms += time * arousal_rates["partner_two"][pos]
+                print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tpartner_one Orgasms: {3:.2f}\tpartner_two Orgasms: {4:.2f}"
+                      .format(pos, time, time / 60.0, partner_one_orgasms, partner_two_orgasms))
+                pos = positions[transition_probs[pos].rvs()]
+                position_count += 1
+            
+            print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tpartner_one Orgasms: {3}\tpartner_two Orgasms: {4}"
+                  .format(total_time, total_time / 60.0, position_count, int(partner_one_orgasms), int(partner_two_orgasms)))
+        else:
+            break
 
-while True:
-    simulate = raw_input("Simulate sex (y/n)? ")
-    # Simulate sex.
-    if "y" in simulate.lower():
-        total_time = 0.0
-        position_count = 0
-        partner_one_orgasms = 0.0
-        partner_two_orgasms = 0.0
-        pos = positions[initial_probs.rvs()]
-        # while partner_one_orgasms < 1.0 or partner_two_orgasms < 1.0: # You know... if you're into being fair.
-        while partner_two_orgasms < 1.0:
-            shape = time_parameters[pos]["shape"]
-            scale = time_parameters[pos]["scale"]
-            time = numpy.random.gamma(shape, scale)
-            total_time += time
-            partner_one_orgasms += time * arousal_rates["partner_one"][pos]
-            partner_two_orgasms += time * arousal_rates["partner_two"][pos]
-            print("Position: {0}\tTime: {1:.2f} (s)/{2:.2f} (min)\tpartner_one Orgasms: {3:.2f}\tpartner_two Orgasms: {4:.2f}"
-                  .format(pos, time, time / 60.0, partner_one_orgasms, partner_two_orgasms))
-            pos = positions[transition_probs[pos].rvs()]
-            position_count += 1
-        
-        print("Total Time: {0:.2f} (s)/{1:.2f} (min)\tPosition Count: {2}\tpartner_one Orgasms: {3}\tpartner_two Orgasms: {4}"
-              .format(total_time, total_time / 60.0, position_count, int(partner_one_orgasms), int(partner_two_orgasms)))
-    else:
-        break
+
+if __name__ == "__main__":
+    main()
