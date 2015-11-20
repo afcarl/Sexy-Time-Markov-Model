@@ -75,7 +75,7 @@ def main():
     time_parameters = get_time_parameters(sys.argv[4])
     
     while True:
-        simulate = raw_input("Simulate sex (y/n)? ")
+        simulate = input("Simulate sex (y/n)? ")
         # Simulate sex.
         if "y" in simulate.lower():
             total_time = 0.0
