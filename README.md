@@ -3,6 +3,8 @@ Sexy-Time-Markov-Model
 
 A Markov model for simulating sex!
 
+<p>Requires Python 3.0.</p>
+
 <p><b>Step 1.</b></p>
 
 Download the ZIP containing all of the files found in the GitHub repository.
